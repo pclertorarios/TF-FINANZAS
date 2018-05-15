@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Finanzas.Models.Resultados.Estructuracion>
+@model Finanzas.Models.Bono
+
+@{
+    ViewBag.Title = "Resultado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Resultado</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.totalPeriodos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TEP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.costesIniciales)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalPeriodos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEA)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEP)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.costesIniciales)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
