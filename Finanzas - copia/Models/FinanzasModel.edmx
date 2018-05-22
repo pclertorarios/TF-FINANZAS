@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FinanzasDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bono">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vnominal" Type="float" Nullable="false" />
+          <Property Name="vcomercial" Type="float" Nullable="false" />
+          <Property Name="años" Type="int" Nullable="false" />
+          <Property Name="frecuencia" Type="int" Nullable="false" />
+          <Property Name="diasAño" Type="int" Nullable="false" />
+          <Property Name="tipoInteres" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="capitalizacion" Type="int" />
+          <Property Name="tasaInteres" Type="float" Nullable="false" />
+          <Property Name="tasaDescuento" Type="float" Nullable="false" />
+          <Property Name="impuestoRenta" Type="float" Nullable="false" />
+          <Property Name="fechaEmision" Type="date" Nullable="false" />
+          <Property Name="pPrima" Type="float" Nullable="false" />
+          <Property Name="pEstructura" Type="float" Nullable="false" />
+          <Property Name="pColoca" Type="float" Nullable="false" />
+          <Property Name="pFlota" Type="float" Nullable="false" />
+          <Property Name="pCAVALI" Type="float" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tipoActor" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Bono_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Bono" Type="Self.Bono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bono">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FinanzasDBModelStoreContainer">
+          <EntitySet Name="Bono" EntityType="Self.Bono" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Bono_Usuario" Association="Self.FK_Bono_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Bono" EntitySet="Bono" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FinanzasDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bono">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vnominal" Type="Double" Nullable="false" />
+          <Property Name="vcomercial" Type="Double" Nullable="false" />
+          <Property Name="años" Type="Int32" Nullable="false" />
+          <Property Name="frecuencia" Type="Int32" Nullable="false" />
+          <Property Name="diasAño" Type="Int32" Nullable="false" />
+          <Property Name="tipoInteres" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="capitalizacion" Type="Int32" />
+          <Property Name="tasaInteres" Type="Double" Nullable="false" />
+          <Property Name="tasaDescuento" Type="Double" Nullable="false" />
+          <Property Name="impuestoRenta" Type="Double" Nullable="false" />
+          <Property Name="fechaEmision" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pPrima" Type="Double" Nullable="false" />
+          <Property Name="pEstructura" Type="Double" Nullable="false" />
+          <Property Name="pColoca" Type="Double" Nullable="false" />
+          <Property Name="pFlota" Type="Double" Nullable="false" />
+          <Property Name="pCAVALI" Type="Double" Nullable="false" />
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipoActor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Bono_Usuario" FromRole="Bono" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bono" Relationship="Self.FK_Bono_Usuario" FromRole="Usuario" ToRole="Bono" />
+        </EntityType>
+        <Association Name="FK_Bono_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Bono" Type="Self.Bono" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Bono">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FinanzasDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bono" EntityType="Self.Bono" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Bono_Usuario" Association="Self.FK_Bono_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Bono" EntitySet="Bono" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FinanzasDBModelStoreContainer" CdmEntityContainer="FinanzasDBEntities">
+          <EntitySetMapping Name="Bono">
+            <EntityTypeMapping TypeName="FinanzasDBModel.Bono">
+              <MappingFragment StoreEntitySet="Bono">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="vnominal" ColumnName="vnominal" />
+                <ScalarProperty Name="vcomercial" ColumnName="vcomercial" />
+                <ScalarProperty Name="años" ColumnName="años" />
+                <ScalarProperty Name="frecuencia" ColumnName="frecuencia" />
+                <ScalarProperty Name="diasAño" ColumnName="diasAño" />
+                <ScalarProperty Name="tipoInteres" ColumnName="tipoInteres" />
+                <ScalarProperty Name="capitalizacion" ColumnName="capitalizacion" />
+                <ScalarProperty Name="tasaInteres" ColumnName="tasaInteres" />
+                <ScalarProperty Name="tasaDescuento" ColumnName="tasaDescuento" />
+                <ScalarProperty Name="impuestoRenta" ColumnName="impuestoRenta" />
+                <ScalarProperty Name="fechaEmision" ColumnName="fechaEmision" />
+                <ScalarProperty Name="pPrima" ColumnName="pPrima" />
+                <ScalarProperty Name="pEstructura" ColumnName="pEstructura" />
+                <ScalarProperty Name="pColoca" ColumnName="pColoca" />
+                <ScalarProperty Name="pFlota" ColumnName="pFlota" />
+                <ScalarProperty Name="pCAVALI" ColumnName="pCAVALI" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="tipoActor" ColumnName="tipoActor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="FinanzasDBModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
