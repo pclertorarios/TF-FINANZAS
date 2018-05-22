@@ -184,6 +184,7 @@
       <DependentUpon>FinanzasModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Resultados\Estructuracion.cs" />
+    <Compile Include="Models\Resultados\Periodo.cs" />
     <Compile Include="Models\Resultados\RatiosDesicion.cs" />
     <Compile Include="Models\Resultados\Rentabilidad.cs" />
     <Compile Include="Models\Resultados\Utilidad.cs" />
@@ -191,6 +192,7 @@
       <DependentUpon>FinanzasModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ResultadosViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -344,7 +346,7 @@
     <Content Include="Views\Usuario\Registro.cshtml" />
     <Content Include="Views\Bono\Index.cshtml" />
     <Content Include="Views\Bono\Calcular.cshtml" />
-    <Content Include="Views\Bono\Resultado.cshtml" />
+    <Content Include="Views\Bono\Resultados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

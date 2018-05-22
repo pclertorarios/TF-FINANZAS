@@ -12,7 +12,7 @@ namespace Finanzas.Helpers
         public static double HallarTEA(double TNP, int diasAño, int capitalizacion)
         {
             double m = diasAño / capitalizacion;
-            return Math.Round(Math.Pow(1 + (TNP / m), m) - 1, 7);
+            return Math.Round(Math.Pow(1 + (TNP / m), m) - 1, 9);
         }
         
         public static double HallarTEP(double Tasa, int diasAño, int frecuencia, int? capitalizacion)
@@ -27,19 +27,24 @@ namespace Finanzas.Helpers
                 TEA = Tasa;
             }
             double fraccion = (double)frecuencia / diasAño;
-            return Math.Round(Math.Pow(1 + TEA, fraccion ) - 1, 7);
+            return Math.Round(Math.Pow(1 + TEA, fraccion ) - 1, 9);
         }
 
         public static double HallarCOK(double tasaDescuento, int diasAño, int frecuencia)
         {
             double fraccion = (double)frecuencia / diasAño;
-            return Math.Round(Math.Pow(1 + tasaDescuento, fraccion) - 1, 7);
+            return Math.Round(Math.Pow(1 + tasaDescuento, fraccion) - 1, 9);
         }
 
         public static double HallarCostesIniciales(string tipoActor, double valorComercial, double pEstructuracion, double pColocacion,double pFlotacion, double pCAVALI)
         {
-            double suma = tipoActor == "Bonita" ? pEstructuracion + pFlotacion + pColocacion + pCAVALI : pFlotacion + pCAVALI;
+            double suma = tipoActor == "Emisor" ? pEstructuracion + pFlotacion + pColocacion + pCAVALI : pFlotacion + pCAVALI;
             return Math.Round(suma * valorComercial, 2);
+        }
+
+        public static double HallarCuota(double bono, double TEP, int numeroCuotas)
+        {
+            return -Math.Round(bono * (Math.Pow(1+TEP,numeroCuotas)*TEP)/ (Math.Pow(1 + TEP, numeroCuotas) - 1), 2);
         }
 
         public static Estructuracion ResultadosEstructuracion(Bono bono)
@@ -51,6 +56,44 @@ namespace Finanzas.Helpers
                 COK = HallarCOK(bono.tasaDescuento,bono.diasAño,bono.frecuencia),
                 costesIniciales = HallarCostesIniciales(bono.tipoActor,bono.vcomercial, bono.pEstructura,bono.pColoca,bono.pFlota,bono.pCAVALI)  
             };
+        }
+        
+        public static List<Periodo> ResultadosPeriodos(Bono bono, Estructuracion estructura)
+        {
+            List<Periodo> lista = new List<Periodo>();
+            double flujo = bono.tipoActor == "Emisor" ? Math.Round(bono.vcomercial - estructura.costesIniciales, 7): Math.Round(-bono.vcomercial - estructura.costesIniciales, 7);
+            Periodo cero = new Periodo
+            {
+                N = 0,
+                plazoGracia = null,
+                bono = null,
+                cupon = null,
+                cuota = null,
+                amortizacion = null,
+                prima = null,
+                escudo = null,
+                flujo = flujo,
+                flujoEscudo = bono.tipoActor == "Emisor" ? flujo : (double?) null,
+                flujoActivo = null,
+                flujoActivoPlazo = null,
+                factorConvexidad = null,
+            };
+            lista.Add(cero);
+            for (int i = 0; i < estructura.totalPeriodos; i++)
+            {
+                Periodo aux = new Periodo();
+                aux.N = i + 1;
+                aux.plazoGracia = null;
+                aux.bono = i == 0 ? bono.vnominal : Math.Round(lista[i].bono.Value + lista[i].amortizacion.Value,2);
+                aux.cupon = Math.Round(-aux.bono.Value * estructura.TEP,2);
+                aux.cuota = HallarCuota(aux.bono.Value, estructura.TEP, estructura.totalPeriodos - aux.N + 1);
+                aux.amortizacion = Math.Round(aux.cuota.Value - aux.cupon.Value,2);
+                aux.prima = aux.N == estructura.totalPeriodos ? Math.Round(bono.pPrima * bono.vnominal,2) : 0;
+                aux.escudo = Math.Round(-aux.cupon.Value * bono.impuestoRenta,2);
+                aux.flujo = Math.Round(aux.cuota.Value + aux.prima.Value,2);
+                lista.Add(aux);
+            }
+            return lista;
         }
     }
 }

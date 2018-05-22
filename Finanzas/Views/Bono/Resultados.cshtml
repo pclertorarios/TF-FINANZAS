@@ -1,0 +1,69 @@
+﻿@model Finanzas.ViewModels.ResultadosViewModel
+@{
+    ViewBag.Title = "Resultados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Resultados</h2>
+<br />
+<div class="row">
+    <div class="col-md-4">
+        <h3>Estructuración del bono:</h3>
+        <p><strong>Total de periodos:</strong> @Model.estructura.totalPeriodos</p>
+        <p><strong>Tasa efectiva del periodo:</strong> @(Model.estructura.TEP * 100)%</p>
+        <p><strong>Tasa efectiva anual:</strong> @(Model.estructura.TEA * 100)%</p>
+        <p><strong>COK del periodo:</strong> @(Model.estructura.COK * 100)%</p>
+        <p><strong>Costos Iniciales:</strong> @Model.estructura.totalPeriodos</p>
+    </div>
+    <div class="col-md-4">
+        <h3>Precio Actual y Utilidad:</h3>
+        <br />
+        <h3>Ratios de decisión:</h3>
+        <br />
+    </div>
+    <div class="col-md-4">
+        <h3>Indicadores de Rentabilidad:</h3>
+        <br />
+    </div>
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>N</th>
+                    <th>Plazo de Gracia</th>
+                    <th>Bono</th>
+                    <th>Cupon</th>
+                    <th>Cuota</th>
+                    <th>Amortización</th>
+                    <th>Prima</th>
+                    <th>Escudo</th>
+                    <th>Flujo</th>
+                    <th>Flujo con escudo</th>
+                    <th>Flujo activo</th>
+                    <th>Flujo activo plazo</th>
+                    <th>Factor de convexidad</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.periodos)
+            {
+                <tr>
+                    <td>@item.N</td>
+                    <td>@item.plazoGracia</td>
+                    <td class="@(item.bono < 0 ? "text-danger" : " ")">@item.bono</td>
+                    <td class="@(item.cupon < 0 ? "text-danger" : " ")">@item.cupon</td>
+                    <td class="@(item.cuota < 0 ? "text-danger" : " ")">@item.cuota</td>
+                    <td class="@(item.amortizacion < 0 ? "text-danger" : " ")">@item.amortizacion</td>
+                    <td class="@(item.prima < 0 ? "text-danger" : " ")">@item.prima</td>
+                    <td class="@(item.escudo < 0 ? "text-danger" : " ")">@item.escudo</td>
+                    <td class="@(item.flujo < 0 ? "text-danger" : " ")">@item.flujo</td>
+                    <td class="@(item.flujoEscudo < 0 ? "text-danger" : " ")">@item.flujoEscudo</td>
+                    <td class="@(item.flujoActivo < 0 ? "text-danger" : " ")">@item.flujoActivo</td>
+                    <td class="@(item.flujoActivoPlazo < 0 ? "text-danger" : " ")">@item.flujoActivoPlazo</td>
+                    <td class="@(item.factorConvexidad < 0 ? "text-danger" : " ")">@item.factorConvexidad</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
