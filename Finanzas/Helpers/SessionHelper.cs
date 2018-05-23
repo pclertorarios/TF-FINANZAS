@@ -9,5 +9,7 @@ namespace Finanzas.Helpers
     public class SessionHelper
     {
         public static Usuario User { get; set; }
+        public static string tipoActor { get; set; }
+        public static string nombreBono { get; set; }
     }
 }

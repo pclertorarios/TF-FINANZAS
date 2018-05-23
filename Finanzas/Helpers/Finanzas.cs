@@ -88,9 +88,16 @@ namespace Finanzas.Helpers
                 aux.cupon = Math.Round(-aux.bono.Value * estructura.TEP,2);
                 aux.cuota = HallarCuota(aux.bono.Value, estructura.TEP, estructura.totalPeriodos - aux.N + 1);
                 aux.amortizacion = Math.Round(aux.cuota.Value - aux.cupon.Value,2);
-                aux.prima = aux.N == estructura.totalPeriodos ? Math.Round(bono.pPrima * bono.vnominal,2) : 0;
+                aux.prima = aux.N == estructura.totalPeriodos ? -Math.Round(bono.pPrima * bono.vnominal,2) : 0;
                 aux.escudo = Math.Round(-aux.cupon.Value * bono.impuestoRenta,2);
-                aux.flujo = Math.Round(aux.cuota.Value + aux.prima.Value,2);
+                aux.flujo = bono.tipoActor == "Bonista" ? -Math.Round(aux.cuota.Value + aux.prima.Value,2) : Math.Round(aux.cuota.Value + aux.prima.Value, 2);
+                aux.flujoEscudo = aux.escudo + aux.flujoEscudo;
+                if (bono.tipoActor == "Bonista")
+                {
+                    aux.flujoActivo = Math.Round(aux.flujo /Math.Pow(1+estructura.COK,aux.N),2);
+                    aux.flujoActivoPlazo = Math.Round(aux.flujoActivo.Value * aux.N * bono.frecuencia / bono.diasAño, 2);
+                    aux.factorConvexidad = Math.Round(aux.flujoActivo.Value * aux.N * (1 + aux.N), 2);
+                }
                 lista.Add(aux);
             }
             return lista;

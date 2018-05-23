@@ -3,7 +3,7 @@
     ViewBag.Title = "Resultados";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Resultados</h2>
+<h2>Resultados "@ViewBag.nombre" (@ViewBag.tipoActor)</h2>
 <br />
 <div class="row">
     <div class="col-md-4">
@@ -37,10 +37,16 @@
                     <th>Prima</th>
                     <th>Escudo</th>
                     <th>Flujo</th>
-                    <th>Flujo con escudo</th>
-                    <th>Flujo activo</th>
-                    <th>Flujo activo plazo</th>
-                    <th>Factor de convexidad</th>
+                    @if (ViewBag.tipoActor == "Emisor")
+                    {
+                        <th>Flujo con escudo</th>
+                    }
+                    else
+                    {
+                        <th>Flujo activo</th>
+                        <th>Flujo activo plazo</th>
+                        <th>Factor de convexidad</th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -56,10 +62,16 @@
                     <td class="@(item.prima < 0 ? "text-danger" : " ")">@item.prima</td>
                     <td class="@(item.escudo < 0 ? "text-danger" : " ")">@item.escudo</td>
                     <td class="@(item.flujo < 0 ? "text-danger" : " ")">@item.flujo</td>
-                    <td class="@(item.flujoEscudo < 0 ? "text-danger" : " ")">@item.flujoEscudo</td>
-                    <td class="@(item.flujoActivo < 0 ? "text-danger" : " ")">@item.flujoActivo</td>
-                    <td class="@(item.flujoActivoPlazo < 0 ? "text-danger" : " ")">@item.flujoActivoPlazo</td>
-                    <td class="@(item.factorConvexidad < 0 ? "text-danger" : " ")">@item.factorConvexidad</td>
+                    @if (ViewBag.tipoActor == "Emisor")
+                    {
+                        <td class="@(item.flujoEscudo < 0 ? "text-danger" : " ")">@item.flujoEscudo</td>
+                    }
+                    else
+                    {
+                        <td class="@(item.flujoActivo < 0 ? "text-danger" : " ")">@item.flujoActivo</td>
+                        <td class="@(item.flujoActivoPlazo < 0 ? "text-danger" : " ")">@item.flujoActivoPlazo</td>
+                        <td class="@(item.factorConvexidad < 0 ? "text-danger" : " ")">@item.factorConvexidad</td>
+                    }
                 </tr>
             }
             </tbody>

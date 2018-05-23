@@ -27,6 +27,8 @@ namespace Finanzas.Controllers
             using (var context = new FinanzasDBEntities())
             {
                 bono.UsuarioID = SessionHelper.User.Id;
+                SessionHelper.tipoActor = bono.tipoActor;
+                SessionHelper.nombreBono = bono.nombre;
                 context.Bono.Add(bono);
                 context.SaveChanges();
             }
@@ -44,6 +46,8 @@ namespace Finanzas.Controllers
             ResultadosViewModel resultados = new ResultadosViewModel();
             resultados.estructura = estructura;
             resultados.periodos = periodos;
+            ViewBag.tipoActor = SessionHelper.tipoActor;
+            ViewBag.nombre = SessionHelper.nombreBono;
             return View(resultados);
         }
 
