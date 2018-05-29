@@ -3,6 +3,8 @@ using Finanzas.Models;
 using Finanzas.Models.Resultados;
 using Finanzas.ViewModels;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Finanzas.Controllers
@@ -24,21 +26,27 @@ namespace Finanzas.Controllers
         [HttpPost]
         public ActionResult Calcular(Bono bono)
         {
+            int ID;
             using (var context = new FinanzasDBEntities())
             {
                 bono.UsuarioID = SessionHelper.User.Id;
-                SessionHelper.tipoActor = bono.tipoActor;
-                SessionHelper.nombreBono = bono.nombre;
                 context.Bono.Add(bono);
                 context.SaveChanges();
+                ID = bono.Id;
             }
-            
-            return RedirectToAction("Resultados", bono);
+            return RedirectToAction("Resultados", new { bonoId = ID });
         }
 
         [HttpGet]
-        public ActionResult Resultados(Bono bono)
+        public ActionResult Resultados(int? bonoId)
         {
+            Bono bono;
+            using (var context = new FinanzasDBEntities())
+            {
+                bono = context.Bono.FirstOrDefault(x => x.Id == bonoId);
+                SessionHelper.tipoActor = bono.tipoActor;
+                SessionHelper.nombreBono = bono.nombre;
+            }
             Estructuracion estructura = new Estructuracion();
             estructura = Finanzas.Helpers.Finanzas.ResultadosEstructuracion(bono);
             List<Periodo> periodos = new List<Periodo>();
@@ -51,6 +59,16 @@ namespace Finanzas.Controllers
             return View(resultados);
         }
 
+        [HttpGet]
+        public ActionResult Listar()
+        {
+            ListaBonosViewModel vm = new ListaBonosViewModel();
+            using (var context = new FinanzasDBEntities())
+            {
+                vm.Bonos = context.Bono.Where(x => x.UsuarioID == SessionHelper.User.Id).ToList();
+            }
+            return View(vm.Bonos);
+        }
 
     }
 }

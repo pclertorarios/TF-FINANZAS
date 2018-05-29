@@ -22,6 +22,9 @@
                 <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Calcular" ? "active" : "")">
                     @Html.ActionLink("Calcular Bono", "Calcular", "Bono")
                 </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Listar" ? "active" : "")">
+                    @Html.ActionLink("Bonos", "Listar", "Bono")
+                </li>
                 <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Logout" ? "active" : "")">
                     @Html.ActionLink("Cerrar Sesión", "Logout", "Usuario")
                 </li>

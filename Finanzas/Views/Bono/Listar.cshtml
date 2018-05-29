@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Finanzas.Models.Bono>
+
+@{
+    ViewBag.Title = "Bonos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Tipo de actor
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.nombre,"Resultados","Bono",new { bonoId = item.Id },null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipoActor)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
