@@ -53,10 +53,13 @@ namespace Finanzas.Controllers
             periodos = Finanzas.Helpers.Finanzas.ResultadosPeriodos(bono, estructura);
             Utilidad utilidad = new Utilidad();
             utilidad = Finanzas.Helpers.Finanzas.ResultadosUtilidad(periodos, estructura, bono);
+            RatiosDesicion ratios = new RatiosDesicion();
+            ratios = Finanzas.Helpers.Finanzas.ResultadosRatios(periodos, estructura, bono);
             ResultadosViewModel resultados = new ResultadosViewModel();
             resultados.estructura = estructura;
             resultados.periodos = periodos;
             resultados.utilidad = utilidad;
+            resultados.ratios = ratios;
             ViewBag.tipoActor = SessionHelper.tipoActor;
             ViewBag.nombre = SessionHelper.nombreBono;
             return View(resultados);

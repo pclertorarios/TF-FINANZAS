@@ -21,7 +21,14 @@
             <p><strong>Precio actual:</strong> @Model.utilidad.precioActual</p>
             <p><strong>Utilidad:</strong> @Model.utilidad.utilidad</p>
         }
-        <h3>Ratios de decisión:</h3>
+        @if (Model.ratios != null)
+        {
+            <h3>Ratios de decisión:</h3>
+            <p><strong>Duracion:</strong> @Model.ratios.duracion</p>
+            <p><strong>Convexidad:</strong> @Model.ratios.convexidad</p>
+            <p><strong>Total:</strong> @Model.ratios.total</p>
+            <p><strong>Duracion Modificada:</strong> @Model.ratios.duracionModificada</p>
+        }
     </div>
     <div class="col-md-4">
         <h3>Indicadores de Rentabilidad:</h3>

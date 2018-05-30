@@ -57,6 +57,25 @@ namespace Finanzas.Helpers
             return Math.Round(resultado,2);
         }
 
+        public static RatiosDesicion ResultadosRatios(List<Periodo> periodos, Estructuracion estructura, Bono bono)
+        {
+            double sumaFAP = 0;
+            double sumaFA = 0;
+            double sumaFC = 0;
+            for (int i = 1; i < periodos.Count; i++)
+            {
+                sumaFAP = sumaFAP + periodos[i].flujoActivoPlazo.Value;
+                sumaFA = sumaFA + periodos[i].flujoActivo.Value;
+                sumaFC = sumaFC + periodos[i].factorConvexidad.Value;
+            }
+            RatiosDesicion resultado = new RatiosDesicion();
+            resultado.duracion = Math.Round(sumaFAP / sumaFA,2);
+            resultado.convexidad = Math.Round(sumaFC / (Math.Pow(1 + estructura.COK, 2) * sumaFA * Math.Pow(bono.diasAño / bono.frecuencia, 2)),2);
+            resultado.total = Math.Round(resultado.duracion + resultado.convexidad,2);
+            resultado.duracionModificada = Math.Round(resultado.duracion / (1 + estructura.COK),2);
+            return resultado;
+        }
+
         public static Utilidad ResultadosUtilidad(List<Periodo> periodos, Estructuracion estructura, Bono bono)
         {
             if (bono.tipoActor == "Bonista")
@@ -64,12 +83,13 @@ namespace Finanzas.Helpers
                 return new Utilidad
                 {
                     precioActual = HallarPrecioActual(periodos, estructura),
-                    utilidad = periodos[0].flujo + HallarPrecioActual(periodos, estructura)
+                    utilidad = Math.Round(periodos[0].flujo + HallarPrecioActual(periodos, estructura), 2)
                 };
             }
             return null;
         }
 
+        
         public static Estructuracion ResultadosEstructuracion(Bono bono)
         {
             return new Estructuracion {
