@@ -15,10 +15,13 @@
         <p><strong>Costos Iniciales:</strong> @Model.estructura.totalPeriodos</p>
     </div>
     <div class="col-md-4">
-        <h3>Precio Actual y Utilidad:</h3>
-        <br />
+        @if(Model.utilidad != null)
+        {
+            <h3>Precio Actual y Utilidad:</h3>
+            <p><strong>Precio actual:</strong> @Model.utilidad.precioActual</p>
+            <p><strong>Utilidad:</strong> @Model.utilidad.utilidad</p>
+        }
         <h3>Ratios de decisión:</h3>
-        <br />
     </div>
     <div class="col-md-4">
         <h3>Indicadores de Rentabilidad:</h3>

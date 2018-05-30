@@ -14,7 +14,7 @@ namespace Finanzas.Helpers
             double m = diasAño / capitalizacion;
             return Math.Round(Math.Pow(1 + (TNP / m), m) - 1, 9);
         }
-        
+
         public static double HallarTEP(double Tasa, int diasAño, int frecuencia, int? capitalizacion)
         {
             double TEA;
@@ -27,7 +27,7 @@ namespace Finanzas.Helpers
                 TEA = Tasa;
             }
             double fraccion = (double)frecuencia / diasAño;
-            return Math.Round(Math.Pow(1 + TEA, fraccion ) - 1, 9);
+            return Math.Round(Math.Pow(1 + TEA, fraccion) - 1, 9);
         }
 
         public static double HallarCOK(double tasaDescuento, int diasAño, int frecuencia)
@@ -36,7 +36,7 @@ namespace Finanzas.Helpers
             return Math.Round(Math.Pow(1 + tasaDescuento, fraccion) - 1, 9);
         }
 
-        public static double HallarCostesIniciales(string tipoActor, double valorComercial, double pEstructuracion, double pColocacion,double pFlotacion, double pCAVALI)
+        public static double HallarCostesIniciales(string tipoActor, double valorComercial, double pEstructuracion, double pColocacion, double pFlotacion, double pCAVALI)
         {
             double suma = tipoActor == "Emisor" ? pEstructuracion + pFlotacion + pColocacion + pCAVALI : pFlotacion + pCAVALI;
             return Math.Round(suma * valorComercial, 2);
@@ -44,7 +44,30 @@ namespace Finanzas.Helpers
 
         public static double HallarCuota(double bono, double TEP, int numeroCuotas)
         {
-            return -Math.Round(bono * (Math.Pow(1+TEP,numeroCuotas)*TEP)/ (Math.Pow(1 + TEP, numeroCuotas) - 1), 2);
+            return -Math.Round(bono * (Math.Pow(1 + TEP, numeroCuotas) * TEP) / (Math.Pow(1 + TEP, numeroCuotas) - 1), 2);
+        }
+
+        public static double HallarPrecioActual(List<Periodo> periodos, Estructuracion estructura)
+        {
+            double resultado = 0;
+            for (int i = 1; i < periodos.Count; i++)
+            {
+                resultado = resultado + (periodos[i].flujo / Math.Pow(estructura.COK + 1, i));
+            }
+            return Math.Round(resultado,2);
+        }
+
+        public static Utilidad ResultadosUtilidad(List<Periodo> periodos, Estructuracion estructura, Bono bono)
+        {
+            if (bono.tipoActor == "Bonista")
+            {
+                return new Utilidad
+                {
+                    precioActual = HallarPrecioActual(periodos, estructura),
+                    utilidad = periodos[0].flujo + HallarPrecioActual(periodos, estructura)
+                };
+            }
+            return null;
         }
 
         public static Estructuracion ResultadosEstructuracion(Bono bono)

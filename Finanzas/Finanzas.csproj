@@ -212,6 +212,7 @@
       <DependentUpon>FinanzasModel.edmx</DependentUpon>
       <LastGenOutput>FinanzasModel.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="Models\FinanzasModel.edmx.sql" />
     <Content Include="Models\FinanzasModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FinanzasModel.edmx</DependentUpon>

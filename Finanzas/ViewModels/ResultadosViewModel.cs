@@ -10,5 +10,6 @@ namespace Finanzas.ViewModels
     {
         public Estructuracion estructura { get; set; }
         public List<Periodo> periodos { get; set; }
+        public Utilidad utilidad { get; set; }
     }
 }

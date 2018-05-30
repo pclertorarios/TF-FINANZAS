@@ -51,9 +51,12 @@ namespace Finanzas.Controllers
             estructura = Finanzas.Helpers.Finanzas.ResultadosEstructuracion(bono);
             List<Periodo> periodos = new List<Periodo>();
             periodos = Finanzas.Helpers.Finanzas.ResultadosPeriodos(bono, estructura);
+            Utilidad utilidad = new Utilidad();
+            utilidad = Finanzas.Helpers.Finanzas.ResultadosUtilidad(periodos, estructura, bono);
             ResultadosViewModel resultados = new ResultadosViewModel();
             resultados.estructura = estructura;
             resultados.periodos = periodos;
+            resultados.utilidad = utilidad;
             ViewBag.tipoActor = SessionHelper.tipoActor;
             ViewBag.nombre = SessionHelper.nombreBono;
             return View(resultados);
@@ -68,6 +71,18 @@ namespace Finanzas.Controllers
                 vm.Bonos = context.Bono.Where(x => x.UsuarioID == SessionHelper.User.Id).ToList();
             }
             return View(vm.Bonos);
+        }
+
+        [HttpGet]
+        public ActionResult Eliminar(int? id)
+        {
+            using (var context = new FinanzasDBEntities())
+            {
+                var bono = context.Bono.FirstOrDefault(x => x.Id == id);
+                context.Bono.Remove(bono);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Listar");
         }
 
     }

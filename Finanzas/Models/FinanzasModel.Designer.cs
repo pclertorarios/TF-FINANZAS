@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'c:\users\u201515078\documents\visual studio 2015\Projects\Finanzas\Finanzas\Models\FinanzasModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Alumnos\Documents\Git\TF-FINANZAS\Finanzas\Models\FinanzasModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

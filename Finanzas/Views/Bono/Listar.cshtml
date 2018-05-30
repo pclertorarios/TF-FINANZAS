@@ -16,16 +16,20 @@
                 <th>
                     Tipo de actor
                 </th>
+                <th></th>
             </tr>
 
             @foreach (var item in Model)
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(item.nombre,"Resultados","Bono",new { bonoId = item.Id },null)
+                        @Html.ActionLink(item.nombre, "Resultados", "Bono", new { bonoId = item.Id }, null)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.tipoActor)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Eliminar", "Eliminar", new { id = item.Id }, new { @class = "text-danger" })
                     </td>
                 </tr>
             }
