@@ -34,7 +34,7 @@ namespace Finanzas.Controllers
                 estructura = Finanzas.Helpers.Finanzas.ResultadosEstructuracion(bono);
                 context.Estructuracion.Add(estructura);
                 List<Periodo> periodos = new List<Periodo>();
-                periodos = Finanzas.Helpers.Finanzas.ResultadosPeriodos(bono, estructura);
+                periodos = Finanzas.Helpers.Finanzas.ResultadosPeriodos(bono, estructura,periodos);
                 foreach (var item in periodos)
                 {
                     context.Periodo.Add(item);
@@ -89,7 +89,7 @@ namespace Finanzas.Controllers
                 {
                     item.plazoGracia = periodos[item.N].plazoGracia;
                 }
-                Helpers.Finanzas.ActualizarFlujo(aux.periodos, aux.estructura, bono);
+                aux.periodos = Helpers.Finanzas.ResultadosPeriodos(bono, aux.estructura, aux.periodos);
                 context.SaveChanges();
             }
 

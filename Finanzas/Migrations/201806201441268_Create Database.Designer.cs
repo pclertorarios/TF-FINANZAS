@@ -7,13 +7,13 @@ namespace Finanzas.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class updatemapping : IMigrationMetadata
+    public sealed partial class CreateDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updatemapping));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "201806201150057_update mapping"; }
+            get { return "201806201441268_Create Database"; }
         }
         
         string IMigrationMetadata.Source

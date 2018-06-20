@@ -165,21 +165,9 @@
     </Compile>
     <Compile Include="Helpers\Finanzas.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
-    <Compile Include="Migrations\201806200657517_Create database.cs" />
-    <Compile Include="Migrations\201806200657517_Create database.Designer.cs">
-      <DependentUpon>201806200657517_Create database.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806200727557_update foreign keys.cs" />
-    <Compile Include="Migrations\201806200727557_update foreign keys.Designer.cs">
-      <DependentUpon>201806200727557_update foreign keys.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806200744021_update foreign keys 2.cs" />
-    <Compile Include="Migrations\201806200744021_update foreign keys 2.Designer.cs">
-      <DependentUpon>201806200744021_update foreign keys 2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201806201150057_update mapping.cs" />
-    <Compile Include="Migrations\201806201150057_update mapping.Designer.cs">
-      <DependentUpon>201806201150057_update mapping.cs</DependentUpon>
+    <Compile Include="Migrations\201806201441268_Create Database.cs" />
+    <Compile Include="Migrations\201806201441268_Create Database.Designer.cs">
+      <DependentUpon>201806201441268_Create Database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bono.cs" />
@@ -345,17 +333,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806200657517_Create database.resx">
-      <DependentUpon>201806200657517_Create database.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806200727557_update foreign keys.resx">
-      <DependentUpon>201806200727557_update foreign keys.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806200744021_update foreign keys 2.resx">
-      <DependentUpon>201806200744021_update foreign keys 2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201806201150057_update mapping.resx">
-      <DependentUpon>201806201150057_update mapping.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806201441268_Create Database.resx">
+      <DependentUpon>201806201441268_Create Database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

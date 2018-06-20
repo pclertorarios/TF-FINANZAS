@@ -101,7 +101,7 @@ namespace Finanzas.Helpers
             };
         }
         
-        public static List<Periodo> ResultadosPeriodos(Bono bono, Estructuracion estructura)
+        public static List<Periodo> ResultadosPeriodos(Bono bono, Estructuracion estructura, List<Periodo> periodos)
         {
             List<Periodo> lista = new List<Periodo>();
             double flujo = bono.tipoActor == "Emisor" ? Math.Round(bono.vcomercial - estructura.costesIniciales, 7): Math.Round(-bono.vcomercial - estructura.costesIniciales, 7);
@@ -122,15 +122,18 @@ namespace Finanzas.Helpers
                 factorConvexidad = null,
             };
             lista.Add(cero);
-            for (int i = 0; i < estructura.totalPeriodos; i++)
+            for (int i = 1; i < estructura.totalPeriodos-1; i++)
             {
                 Periodo aux = new Periodo();
-                aux.N = i + 1;
-                aux.plazoGracia = null;
-                aux.bono = i == 0 ? bono.vnominal : Math.Round(lista[i].bono.Value + lista[i].amortizacion.Value,2);
+                aux.N = i;
+                aux.bono = i == 1 ? bono.vnominal : Math.Round(lista[i-1].bono.Value + lista[i-1].amortizacion.Value,2);
+                if (periodos[i-1].plazoGracia == "T" && i!=1) aux.bono = Math.Round(lista[i-1].bono.Value - lista[i-1].cuota.Value, 2);
                 aux.cupon = Math.Round(-aux.bono.Value * estructura.TEP,2);
                 aux.cuota = HallarCuota(aux.bono.Value, estructura.TEP, estructura.totalPeriodos - aux.N + 1);
+                if (periodos[i].plazoGracia == "T") aux.cuota = 0;
+                if (periodos[i].plazoGracia == "P") aux.cuota = aux.cupon;
                 aux.amortizacion = Math.Round(aux.cuota.Value - aux.cupon.Value,2);
+                if (periodos[i].plazoGracia == "T" || periodos[i].plazoGracia == "P") aux.amortizacion = 0;
                 aux.prima = aux.N == estructura.totalPeriodos ? -Math.Round(bono.pPrima * bono.vnominal,2) : 0;
                 aux.escudo = Math.Round(-aux.cupon.Value * bono.impuestoRenta,2);
                 aux.flujo = bono.tipoActor == "Bonista" ? -Math.Round(aux.cuota.Value + aux.prima.Value,2) : Math.Round(aux.cuota.Value + aux.prima.Value, 2);
@@ -144,26 +147,6 @@ namespace Finanzas.Helpers
                 lista.Add(aux);
             }
             return lista;
-        }
-
-        public static void ActualizarFlujo(List<Periodo> periodos, Estructuracion estructura, Bono bono)
-        {
-            for(int i = 1;i<periodos.Count-1;i++)
-            {
-                periodos[i].bono = periodos[i - 1].plazoGracia == "T" ? periodos[i - 1].bono - periodos[i - 1].cuota : periodos[i].bono;
-                periodos[i].cupon = Math.Round(-periodos[i].bono.Value * estructura.TEP, 2);
-                periodos[i].cuota = periodos[i].plazoGracia == "T" ? 0 : (periodos[i].plazoGracia == "P" ? periodos[i].cupon : HallarCuota(periodos[i].bono.Value, estructura.TEP, estructura.totalPeriodos - periodos[i].N + 1));
-                periodos[i].amortizacion = periodos[i].plazoGracia == "T" || periodos[i].plazoGracia == "P" ? 0 : Math.Round(periodos[i].cuota.Value - periodos[i].cupon.Value, 2);
-                periodos[i].escudo = Math.Round(-periodos[i].cupon.Value * bono.impuestoRenta, 2);
-                periodos[i].flujo = bono.tipoActor == "Bonista" ? -Math.Round(periodos[i].cuota.Value + periodos[i].prima.Value, 2) : Math.Round(periodos[i].cuota.Value + periodos[i].prima.Value, 2);
-                periodos[i].flujoEscudo = periodos[i].escudo + periodos[i].flujoEscudo;
-                if (bono.tipoActor == "Bonista")
-                {
-                    periodos[i].flujoActivo = Math.Round(periodos[i].flujo / Math.Pow(1 + estructura.COK, periodos[i].N), 2);
-                    periodos[i].flujoActivoPlazo = Math.Round(periodos[i].flujoActivo.Value * periodos[i].N * bono.frecuencia / bono.diasAño, 2);
-                    periodos[i].factorConvexidad = Math.Round(periodos[i].flujoActivo.Value * periodos[i].N * (1 + periodos[i].N), 2);
-                }
-            }
         }
     }
 }
