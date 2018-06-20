@@ -165,35 +165,34 @@
     </Compile>
     <Compile Include="Helpers\Finanzas.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
-    <Compile Include="Models\Bono.cs">
-      <DependentUpon>FinanzasModel.tt</DependentUpon>
+    <Compile Include="Migrations\201806200657517_Create database.cs" />
+    <Compile Include="Migrations\201806200657517_Create database.Designer.cs">
+      <DependentUpon>201806200657517_Create database.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\FinanzasModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinanzasModel.Context.tt</DependentUpon>
+    <Compile Include="Migrations\201806200727557_update foreign keys.cs" />
+    <Compile Include="Migrations\201806200727557_update foreign keys.Designer.cs">
+      <DependentUpon>201806200727557_update foreign keys.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\FinanzasModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinanzasModel.tt</DependentUpon>
+    <Compile Include="Migrations\201806200744021_update foreign keys 2.cs" />
+    <Compile Include="Migrations\201806200744021_update foreign keys 2.Designer.cs">
+      <DependentUpon>201806200744021_update foreign keys 2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\FinanzasModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FinanzasModel.edmx</DependentUpon>
+    <Compile Include="Migrations\201806201150057_update mapping.cs" />
+    <Compile Include="Migrations\201806201150057_update mapping.Designer.cs">
+      <DependentUpon>201806201150057_update mapping.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Bono.cs" />
+    <Compile Include="Models\FinanzasModel.cs" />
     <Compile Include="Models\Resultados\Estructuracion.cs" />
     <Compile Include="Models\Resultados\Periodo.cs" />
     <Compile Include="Models\Resultados\RatiosDesicion.cs" />
     <Compile Include="Models\Resultados\Rentabilidad.cs" />
     <Compile Include="Models\Resultados\Utilidad.cs" />
-    <Compile Include="Models\Usuario.cs">
-      <DependentUpon>FinanzasModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ListaBonosViewModel.cs" />
-    <Compile Include="ViewModels\ResultadosViewModel.cs" />
+    <Compile Include="Models\Resultado.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -207,17 +206,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\FinanzasModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FinanzasModel.edmx</DependentUpon>
-      <LastGenOutput>FinanzasModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\FinanzasModel.edmx.sql" />
-    <Content Include="Models\FinanzasModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FinanzasModel.edmx</DependentUpon>
-      <LastGenOutput>FinanzasModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
@@ -226,13 +214,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="Models\FinanzasModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FinanzasModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\FinanzasModel.edmx.diagram">
-      <DependentUpon>FinanzasModel.edmx</DependentUpon>
     </Content>
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
@@ -350,6 +331,7 @@
     <Content Include="Views\Bono\Calcular.cshtml" />
     <Content Include="Views\Bono\Resultados.cshtml" />
     <Content Include="Views\Bono\Listar.cshtml" />
+    <Content Include="Views\Bono\Flujo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -361,6 +343,20 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201806200657517_Create database.resx">
+      <DependentUpon>201806200657517_Create database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806200727557_update foreign keys.resx">
+      <DependentUpon>201806200727557_update foreign keys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806200744021_update foreign keys 2.resx">
+      <DependentUpon>201806200744021_update foreign keys 2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806201150057_update mapping.resx">
+      <DependentUpon>201806201150057_update mapping.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

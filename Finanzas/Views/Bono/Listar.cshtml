@@ -23,7 +23,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(item.nombre, "Resultados", "Bono", new { bonoId = item.Id }, null)
+                        @Html.ActionLink(item.nombre, "Flujo", "Bono", new { resultadoId = item.Resultado.Id }, null)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.tipoActor)

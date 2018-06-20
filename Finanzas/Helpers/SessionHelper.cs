@@ -11,5 +11,6 @@ namespace Finanzas.Helpers
         public static Usuario User { get; set; }
         public static string tipoActor { get; set; }
         public static string nombreBono { get; set; }
+        public static int resultadoId { get; set; }
     }
 }

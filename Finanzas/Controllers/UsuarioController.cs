@@ -30,7 +30,7 @@ namespace Finanzas.Controllers
             {
                 if (UsuarioValido(user.username, user.password))
                 {
-                    using (var context = new FinanzasDBEntities())
+                    using (var context = new FinanzasModel())
                     {
                         var currentUser = context.Usuario.FirstOrDefault(x => x.username == user.username);
                         SessionHelper.User = currentUser;
@@ -56,7 +56,7 @@ namespace Finanzas.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var context = new FinanzasDBEntities())
+                using (var context = new FinanzasModel())
                 {
                     if (context.Usuario.Where(x=>x.username == user.username).Count() != 0)
                     {
@@ -83,7 +83,7 @@ namespace Finanzas.Controllers
         }
         private bool UsuarioValido(String username, String password)
         {
-            using (var context = new FinanzasDBEntities())
+            using (var context = new FinanzasModel())
             {
                 var respuesta = context.Usuario.Where(x=>x.username == username && x.password == password).Count();
                 return respuesta != 0;

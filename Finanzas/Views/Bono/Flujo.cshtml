@@ -1,0 +1,83 @@
+﻿@model List<Finanzas.Models.Resultados.Periodo>
+@{
+    ViewBag.Title = "Resultados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Flujo de Caja "@ViewBag.nombre" (@ViewBag.tipoActor)</h2>
+<br />
+@using (Html.BeginForm("Flujo", "Bono", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Plazo de Gracia</th>
+                        <th>Bono</th>
+                        <th>Cupon</th>
+                        <th>Cuota</th>
+                        <th>Amortización</th>
+                        <th>Prima</th>
+                        <th>Escudo</th>
+                        <th>Flujo</th>
+                        @if (ViewBag.tipoActor == "Emisor")
+                        {
+                            <th>Flujo con escudo</th>
+                        }
+                        else
+                        {
+                            <th>Flujo activo</th>
+                            <th>Flujo activo plazo</th>
+                            <th>Factor de convexidad</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model[i].N</td>
+                            @if (Model[i].N != 0 && Model[i].N < Model.Count - 1)
+                            {
+                                <td>
+
+                                    @Html.TextBoxFor(model => model[i].plazoGracia)
+
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+                            @Html.HiddenFor(model => model[i].N)
+                            <td class="@(Model[i].bono < 0 ? "text-danger" : " ")">@Model[i].bono</td>
+                            <td class="@(Model[i].cupon < 0 ? "text-danger" : " ")">@Model[i].cupon</td>
+                            <td class="@(Model[i].cuota < 0 ? "text-danger" : " ")">@Model[i].cuota</td>
+                            <td class="@(Model[i].amortizacion < 0 ? "text-danger" : " ")">@Model[i].amortizacion</td>
+                            <td class="@(Model[i].prima < 0 ? "text-danger" : " ")">@Model[i].prima</td>
+                            <td class="@(Model[i].escudo < 0 ? "text-danger" : " ")">@Model[i].escudo</td>
+                            <td class="@(Model[i].flujo < 0 ? "text-danger" : " ")">@Model[i].flujo</td>
+                            @if (ViewBag.tipoActor == "Emisor")
+                    {
+                                <td class="@(Model[i].flujoEscudo < 0 ? "text-danger" : " ")">@Model[i].flujoEscudo</td>
+                            }
+                            else
+                            {
+                                <td class="@(Model[i].flujoActivo < 0 ? "text-danger" : " ")">@Model[i].flujoActivo</td>
+                                <td class="@(Model[i].flujoActivoPlazo < 0 ? "text-danger" : " ")">@Model[i].flujoActivoPlazo</td>
+                                <td class="@(Model[i].factorConvexidad < 0 ? "text-danger" : " ")">@Model[i].factorConvexidad</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Actualizar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+

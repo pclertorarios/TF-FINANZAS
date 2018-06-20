@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,8 @@ namespace Finanzas.Models.Resultados
 {
     public class Estructuracion
     {
+        [Key]
+        public int Id { get; set; }
         public int totalPeriodos { get; set; }
         public double TEA { get; set; }
         public double TEP { get; set; }
