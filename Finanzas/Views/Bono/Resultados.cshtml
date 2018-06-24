@@ -5,104 +5,34 @@
 }
 <h2>Resultados "@ViewBag.nombre" (@ViewBag.tipoActor)</h2>
 <br />
-@using (Html.BeginForm())
-{
-    <div class="row">
-        <div class="col-md-4">
-            <h3>Estructuración del bono:</h3>
-            <p><strong>Total de periodos:</strong> @Model.estructura.totalPeriodos</p>
-            <p><strong>Tasa efectiva del periodo:</strong> @(Model.estructura.TEP * 100)%</p>
-            <p><strong>Tasa efectiva anual:</strong> @(Model.estructura.TEA * 100)%</p>
-            <p><strong>COK del periodo:</strong> @(Model.estructura.COK * 100)%</p>
-            <p><strong>Costos Iniciales:</strong> @Model.estructura.totalPeriodos</p>
-        </div>
-        <div class="col-md-4">
-            @if (Model.utilidad != null)
+<div class="row">
+    <div class="col-md-4">
+        <h3>Estructuración del bono:</h3>
+        <p><strong>Total de periodos:</strong> @Model.estructura.totalPeriodos</p>
+        <p><strong>Tasa efectiva del periodo:</strong> @(Model.estructura.TEP * 100)%</p>
+        <p><strong>Tasa efectiva anual:</strong> @(Model.estructura.TEA * 100)%</p>
+        <p><strong>COK del periodo:</strong> @(Model.estructura.COK * 100)%</p>
+        <p><strong>Costos Iniciales:</strong> @Model.estructura.totalPeriodos</p>
+    </div>
+    <div class="col-md-4">
+        @if (Model.utilidad != null)
             {
-                <h3>Precio Actual y Utilidad:</h3>
+            <h3>Precio Actual y Utilidad:</h3>
                 <p><strong>Precio actual:</strong> @Model.utilidad.precioActual</p>
                 <p><strong>Utilidad:</strong> @Model.utilidad.utilidad</p>
-            }
-            @if (Model.ratios != null)
+        }
+        @if (Model.ratios != null)
             {
-                <h3>Ratios de decisión:</h3>
+            <h3>Ratios de decisión:</h3>
                 <p><strong>Duracion:</strong> @Model.ratios.duracion</p>
                 <p><strong>Convexidad:</strong> @Model.ratios.convexidad</p>
                 <p><strong>Total:</strong> @Model.ratios.total</p>
                 <p><strong>Duracion Modificada:</strong> @Model.ratios.duracionModificada</p>
-            }
-        </div>
-        <div class="col-md-4">
-            <h3>Indicadores de Rentabilidad:</h3>
-            <br />
-        </div>
-        <div class="col-md-12">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>N</th>
-                        <th>Plazo de Gracia</th>
-                        <th>Bono</th>
-                        <th>Cupon</th>
-                        <th>Cuota</th>
-                        <th>Amortización</th>
-                        <th>Prima</th>
-                        <th>Escudo</th>
-                        <th>Flujo</th>
-                        @if (ViewBag.tipoActor == "Emisor")
-                        {
-                            <th>Flujo con escudo</th>
-                        }
-                        else
-                        {
-                            <th>Flujo activo</th>
-                            <th>Flujo activo plazo</th>
-                            <th>Factor de convexidad</th>
-                        }
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i <= Model.estructura.totalPeriodos; i++)
-                    {
-                        <tr>
-                            <td>@Model.periodos[i].N</td>
-                            @if (Model.periodos[i].N != 0 && Model.periodos[i].N < Model.periodos.Count - 1)
-                            {
-                                <td>
-                                    @Html.EditorFor(model => model.periodos[i].plazoGracia);
-                                </td>
-                            }
-                            else
-                            {
-                                <td></td>
-                            }
-                            <td class="@(Model.periodos[i].bono < 0 ? "text-danger" : " ")">@Model.periodos[i].bono</td>
-                            <td class="@(Model.periodos[i].cupon < 0 ? "text-danger" : " ")">@Model.periodos[i].cupon</td>
-                            <td class="@(Model.periodos[i].cuota < 0 ? "text-danger" : " ")">@Model.periodos[i].cuota</td>
-                            <td class="@(Model.periodos[i].amortizacion < 0 ? "text-danger" : " ")">@Model.periodos[i].amortizacion</td>
-                            <td class="@(Model.periodos[i].prima < 0 ? "text-danger" : " ")">@Model.periodos[i].prima</td>
-                            <td class="@(Model.periodos[i].escudo < 0 ? "text-danger" : " ")">@Model.periodos[i].escudo</td>
-                            <td class="@(Model.periodos[i].flujo < 0 ? "text-danger" : " ")">@Model.periodos[i].flujo</td>
-                            @if (ViewBag.tipoActor == "Emisor")
-                    {
-                                <td class="@(Model.periodos[i].flujoEscudo < 0 ? "text-danger" : " ")">@Model.periodos[i].flujoEscudo</td>
-                            }
-                            else
-                            {
-                                <td class="@(Model.periodos[i].flujoActivo < 0 ? "text-danger" : " ")">@Model.periodos[i].flujoActivo</td>
-                                <td class="@(Model.periodos[i].flujoActivoPlazo < 0 ? "text-danger" : " ")">@Model.periodos[i].flujoActivoPlazo</td>
-                                <td class="@(Model.periodos[i].factorConvexidad < 0 ? "text-danger" : " ")">@Model.periodos[i].factorConvexidad</td>
-                            }
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+        }
     </div>
-    @Html.HiddenFor(model => model.Id)
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Actualizar" class="btn btn-primary" />
-        </div>
+    <div class="col-md-4">
+        <h3>Indicadores de Rentabilidad:</h3>
+        <br />
     </div>
-}
+
+</div>

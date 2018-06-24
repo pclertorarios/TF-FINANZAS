@@ -64,12 +64,16 @@ namespace Finanzas.Controllers
                     Include(x=>x.periodos).
                     FirstOrDefault(x => x.Id == resultadoId);
                 bono = context.Bono.FirstOrDefault(x => x.Resultado.Id == resultadoId);
+                resultado.ratios = Helpers.Finanzas.ResultadosRatios(resultado.periodos, resultado.estructura, bono);
+                resultado.utilidad = Helpers.Finanzas.ResultadosUtilidad(resultado.periodos, resultado.estructura, bono);
+                context.SaveChanges();
             }
             SessionHelper.tipoActor = bono.tipoActor;
             SessionHelper.nombreBono = bono.nombre;
             SessionHelper.resultadoId = resultadoId;
             ViewBag.tipoActor = SessionHelper.tipoActor;
             ViewBag.nombre = SessionHelper.nombreBono;
+            ViewBag.ID = resultado.Id;
             return View(resultado.periodos);
         }
 
@@ -106,7 +110,6 @@ namespace Finanzas.Controllers
                 bono = context.Bono.FirstOrDefault(x => x.Resultado.Id == resultadoId);
                 resultado = context.Resultado.
                     Include(x=>x.estructura).
-                    Include(x=>x.periodos).
                     Include(x=>x.ratios).
                     Include(x=>x.utilidad).
                     FirstOrDefault(x => x.Id == resultadoId);
