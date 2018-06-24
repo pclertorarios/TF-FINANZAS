@@ -122,18 +122,19 @@ namespace Finanzas.Helpers
                 factorConvexidad = null,
             };
             lista.Add(cero);
-            for (int i = 1; i < estructura.totalPeriodos-1; i++)
+            for (int i = 1; i <= estructura.totalPeriodos; i++)
             {
                 Periodo aux = new Periodo();
                 aux.N = i;
+                aux.plazoGracia = periodos[i].plazoGracia;
                 aux.bono = i == 1 ? bono.vnominal : Math.Round(lista[i-1].bono.Value + lista[i-1].amortizacion.Value,2);
-                if (periodos[i-1].plazoGracia == "T" && i!=1) aux.bono = Math.Round(lista[i-1].bono.Value - lista[i-1].cuota.Value, 2);
+                if (periodos.Count >0 && periodos[i-1].plazoGracia == "T" && i!=1) aux.bono = Math.Round(lista[i-1].bono.Value - lista[i-1].cupon.Value, 2);
                 aux.cupon = Math.Round(-aux.bono.Value * estructura.TEP,2);
                 aux.cuota = HallarCuota(aux.bono.Value, estructura.TEP, estructura.totalPeriodos - aux.N + 1);
-                if (periodos[i].plazoGracia == "T") aux.cuota = 0;
-                if (periodos[i].plazoGracia == "P") aux.cuota = aux.cupon;
+                if (periodos.Count > 0 && periodos[i].plazoGracia == "T") aux.cuota = 0;
+                if (periodos.Count > 0 && periodos[i].plazoGracia == "P") aux.cuota = aux.cupon;
                 aux.amortizacion = Math.Round(aux.cuota.Value - aux.cupon.Value,2);
-                if (periodos[i].plazoGracia == "T" || periodos[i].plazoGracia == "P") aux.amortizacion = 0;
+                if (periodos.Count > 0 && (periodos[i].plazoGracia == "T" || periodos[i].plazoGracia == "P")) aux.amortizacion = 0;
                 aux.prima = aux.N == estructura.totalPeriodos ? -Math.Round(bono.pPrima * bono.vnominal,2) : 0;
                 aux.escudo = Math.Round(-aux.cupon.Value * bono.impuestoRenta,2);
                 aux.flujo = bono.tipoActor == "Bonista" ? -Math.Round(aux.cuota.Value + aux.prima.Value,2) : Math.Round(aux.cuota.Value + aux.prima.Value, 2);
