@@ -25,22 +25,30 @@ namespace Finanzas.Models
         public string tipoInteres { get; set; }
         public int? capitalizacion { get; set; }
         [Required]
+        
         public double tasaInteres { get; set; }
         [Required]
+        
         public double tasaDescuento { get; set; }
         [Required]
+        
         public double impuestoRenta { get; set; }
         [Required]
         public DateTime fechaEmision { get; set; }
         [Required]
+        
         public double pPrima { get; set; }
         [Required]
+        
         public double pEstructura { get; set; }
         [Required]
+        
         public double pColoca { get; set; }
         [Required]
+        
         public double pFlota { get; set; }
         [Required]
+        
         public double pCAVALI { get; set; }
         [Required]
         public int UsuarioID { get; set; }

@@ -165,9 +165,13 @@
     </Compile>
     <Compile Include="Helpers\Finanzas.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
-    <Compile Include="Migrations\201806201441268_Create Database.cs" />
-    <Compile Include="Migrations\201806201441268_Create Database.Designer.cs">
-      <DependentUpon>201806201441268_Create Database.cs</DependentUpon>
+    <Compile Include="Migrations\201806250012344_Create Database.cs" />
+    <Compile Include="Migrations\201806250012344_Create Database.Designer.cs">
+      <DependentUpon>201806250012344_Create Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806250041047_asd.cs" />
+    <Compile Include="Migrations\201806250041047_asd.Designer.cs">
+      <DependentUpon>201806250041047_asd.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bono.cs" />
@@ -333,8 +337,11 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201806201441268_Create Database.resx">
-      <DependentUpon>201806201441268_Create Database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201806250012344_Create Database.resx">
+      <DependentUpon>201806250012344_Create Database.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806250041047_asd.resx">
+      <DependentUpon>201806250041047_asd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -58,13 +58,13 @@ namespace Finanzas.Controllers
             {
                 using (var context = new FinanzasModel())
                 {
+                    var usuario = context.Usuario.Add(user);
                     if (context.Usuario.Where(x=>x.username == user.username).Count() != 0)
                     {
                         ModelState.AddModelError("", "Usuario ya existente");
                     }
                     else
                     {
-                        var usuario = context.Usuario.Add(user);
                         context.SaveChanges();
                         return RedirectToAction("Login", "Usuario");
                     }

@@ -13,7 +13,7 @@ namespace Finanzas.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201806201441268_Create Database"; }
+            get { return "201806250012344_Create Database"; }
         }
         
         string IMigrationMetadata.Source

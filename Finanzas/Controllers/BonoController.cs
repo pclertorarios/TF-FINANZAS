@@ -26,6 +26,14 @@ namespace Finanzas.Controllers
         [HttpPost]
         public ActionResult Calcular(Bono bono)
         {
+            bono.impuestoRenta = bono.impuestoRenta / 100;
+            bono.tasaInteres = bono.tasaInteres / 100;
+            bono.tasaDescuento = bono.tasaDescuento / 100;
+            bono.pPrima = bono.pPrima / 100;
+            bono.pFlota = bono.pFlota / 100;
+            bono.pEstructura = bono.pEstructura / 100;
+            bono.pColoca = bono.pColoca / 100;
+            bono.pCAVALI = bono.pCAVALI / 100;
             int ID;
             using (var context = new FinanzasModel())
             {

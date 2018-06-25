@@ -12,7 +12,7 @@
         <p><strong>Tasa efectiva del periodo:</strong> @(Model.estructura.TEP * 100)%</p>
         <p><strong>Tasa efectiva anual:</strong> @(Model.estructura.TEA * 100)%</p>
         <p><strong>COK del periodo:</strong> @(Model.estructura.COK * 100)%</p>
-        <p><strong>Costos Iniciales:</strong> @Model.estructura.totalPeriodos</p>
+        <p><strong>Costos Iniciales:</strong> @Model.estructura.costesIniciales</p>
     </div>
     <div class="col-md-4">
         @if (Model.utilidad != null)

@@ -3,6 +3,7 @@ namespace Finanzas.Models
     using Resultados;
     using System;
     using System.Data.Entity;
+    using System.Data.Entity.ModelConfiguration.Conventions;
     using System.Linq;
 
     public class FinanzasModel : DbContext
@@ -16,6 +17,10 @@ namespace Finanzas.Models
         public FinanzasModel()
             : base("name=FinanzasModel")
         {
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
         public virtual DbSet<Bono> Bono { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }

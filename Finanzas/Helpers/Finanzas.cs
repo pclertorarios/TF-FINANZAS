@@ -78,15 +78,15 @@ namespace Finanzas.Helpers
 
         public static Utilidad ResultadosUtilidad(List<Periodo> periodos, Estructuracion estructura, Bono bono)
         {
-            if (bono.tipoActor == "Bonista")
+            if (bono.tipoActor == "Emisor")
             {
-                return new Utilidad
-                {
-                    precioActual = HallarPrecioActual(periodos, estructura),
-                    utilidad = Math.Round(periodos[0].flujo + HallarPrecioActual(periodos, estructura), 2)
-                };
+                return null;
             }
-            return null;
+            return new Utilidad
+            {
+                precioActual = HallarPrecioActual(periodos, estructura),
+                utilidad = Math.Round(periodos[0].flujo + HallarPrecioActual(periodos, estructura), 2)
+            };
         }
 
         
@@ -126,7 +126,7 @@ namespace Finanzas.Helpers
             {
                 Periodo aux = new Periodo();
                 aux.N = i;
-                aux.plazoGracia = periodos[i].plazoGracia;
+                if(periodos.Count > 0) aux.plazoGracia = periodos[i].plazoGracia;
                 aux.bono = i == 1 ? bono.vnominal : Math.Round(lista[i-1].bono.Value + lista[i-1].amortizacion.Value,2);
                 if (periodos.Count >0 && periodos[i-1].plazoGracia == "T" && i!=1) aux.bono = Math.Round(lista[i-1].bono.Value - lista[i-1].cupon.Value, 2);
                 aux.cupon = Math.Round(-aux.bono.Value * estructura.TEP,2);
@@ -139,12 +139,9 @@ namespace Finanzas.Helpers
                 aux.escudo = Math.Round(-aux.cupon.Value * bono.impuestoRenta,2);
                 aux.flujo = bono.tipoActor == "Bonista" ? -Math.Round(aux.cuota.Value + aux.prima.Value,2) : Math.Round(aux.cuota.Value + aux.prima.Value, 2);
                 aux.flujoEscudo = aux.escudo + aux.flujoEscudo;
-                if (bono.tipoActor == "Bonista")
-                {
-                    aux.flujoActivo = Math.Round(aux.flujo /Math.Pow(1+estructura.COK,aux.N),2);
-                    aux.flujoActivoPlazo = Math.Round(aux.flujoActivo.Value * aux.N * bono.frecuencia / bono.diasAño, 2);
-                    aux.factorConvexidad = Math.Round(aux.flujoActivo.Value * aux.N * (1 + aux.N), 2);
-                }
+                aux.flujoActivo = Math.Round(aux.flujo /Math.Pow(1+estructura.COK,aux.N),2);
+                aux.flujoActivoPlazo = Math.Round(aux.flujoActivo.Value * aux.N * bono.frecuencia / bono.diasAño, 2);
+                aux.factorConvexidad = Math.Round(aux.flujoActivo.Value * aux.N * (1 + aux.N), 2);
                 lista.Add(aux);
             }
             return lista;
