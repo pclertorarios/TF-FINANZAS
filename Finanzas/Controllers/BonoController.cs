@@ -74,6 +74,7 @@ namespace Finanzas.Controllers
                 bono = context.Bono.FirstOrDefault(x => x.Resultado.Id == resultadoId);
                 resultado.ratios = Helpers.Finanzas.ResultadosRatios(resultado.periodos, resultado.estructura, bono);
                 resultado.utilidad = Helpers.Finanzas.ResultadosUtilidad(resultado.periodos, resultado.estructura, bono);
+                resultado.rentabilidad = Helpers.Finanzas.ResultadosRentabilidad(bono, resultado.periodos);
                 context.SaveChanges();
             }
             SessionHelper.tipoActor = bono.tipoActor;
@@ -120,6 +121,7 @@ namespace Finanzas.Controllers
                     Include(x=>x.estructura).
                     Include(x=>x.ratios).
                     Include(x=>x.utilidad).
+                    Include(x=>x.rentabilidad).
                     FirstOrDefault(x => x.Id == resultadoId);
 
             }

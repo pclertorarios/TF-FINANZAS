@@ -3,7 +3,7 @@ using Finanzas.Models.Resultados;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using Microsoft.VisualBasic;
 
 namespace Finanzas.Helpers
 {
@@ -54,8 +54,9 @@ namespace Finanzas.Helpers
             {
                 resultado = resultado + (periodos[i].flujo / Math.Pow(estructura.COK + 1, i));
             }
-            return Math.Round(resultado,2);
+            return Math.Round(resultado, 2);
         }
+
 
         public static RatiosDesicion ResultadosRatios(List<Periodo> periodos, Estructuracion estructura, Bono bono)
         {
@@ -69,10 +70,10 @@ namespace Finanzas.Helpers
                 sumaFC = sumaFC + periodos[i].factorConvexidad.Value;
             }
             RatiosDesicion resultado = new RatiosDesicion();
-            resultado.duracion = Math.Round(sumaFAP / sumaFA,2);
-            resultado.convexidad = Math.Round(sumaFC / (Math.Pow(1 + estructura.COK, 2) * sumaFA * Math.Pow(bono.diasAño / bono.frecuencia, 2)),2);
-            resultado.total = Math.Round(resultado.duracion + resultado.convexidad,2);
-            resultado.duracionModificada = Math.Round(resultado.duracion / (1 + estructura.COK),2);
+            resultado.duracion = Math.Round(sumaFAP / sumaFA, 2);
+            resultado.convexidad = Math.Round(sumaFC / (Math.Pow(1 + estructura.COK, 2) * sumaFA * Math.Pow(bono.diasAño / bono.frecuencia, 2)), 2);
+            resultado.total = Math.Round(resultado.duracion + resultado.convexidad, 2);
+            resultado.duracionModificada = Math.Round(resultado.duracion / (1 + estructura.COK), 2);
             return resultado;
         }
 
@@ -89,16 +90,27 @@ namespace Finanzas.Helpers
             };
         }
 
-        
+
         public static Estructuracion ResultadosEstructuracion(Bono bono)
         {
             return new Estructuracion {
                 totalPeriodos = (bono.diasAño / bono.frecuencia) * bono.años,
                 TEA = bono.tipoInteres == "Efectiva" ? bono.tasaInteres : HallarTEA(bono.tasaInteres, bono.diasAño, bono.capitalizacion.Value),
                 TEP = HallarTEP(bono.tasaInteres, bono.diasAño, bono.frecuencia, bono.capitalizacion),
-                COK = HallarCOK(bono.tasaDescuento,bono.diasAño,bono.frecuencia),
-                costesIniciales = HallarCostesIniciales(bono.tipoActor,bono.vcomercial, bono.pEstructura,bono.pColoca,bono.pFlota,bono.pCAVALI)  
+                COK = HallarCOK(bono.tasaDescuento, bono.diasAño, bono.frecuencia),
+                costesIniciales = HallarCostesIniciales(bono.tipoActor, bono.vcomercial, bono.pEstructura, bono.pColoca, bono.pFlota, bono.pCAVALI)
             };
+        }
+
+        public static Rentabilidad ResultadosRentabilidad(Bono bono, List<Periodo> periodos)
+        {
+            double[] flujos = periodos.Select(x => x.flujo).ToArray();
+            Rentabilidad resultado = new Rentabilidad
+            {
+                TCEA = Math.Round(Math.Pow(Financial.IRR(ref flujos)+1,(double)bono.diasAño/bono.frecuencia) -1,9)*100,
+                TREA = Math.Round(Math.Pow(Financial.IRR(ref flujos) + 1, (double)bono.diasAño / bono.frecuencia) - 1, 9)*100,
+            };
+            return resultado;
         }
         
         public static List<Periodo> ResultadosPeriodos(Bono bono, Estructuracion estructura, List<Periodo> periodos)
@@ -116,7 +128,7 @@ namespace Finanzas.Helpers
                 prima = null,
                 escudo = null,
                 flujo = flujo,
-                flujoEscudo = bono.tipoActor == "Emisor" ? flujo : (double?) null,
+                flujoEscudo = flujo,
                 flujoActivo = null,
                 flujoActivoPlazo = null,
                 factorConvexidad = null,

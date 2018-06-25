@@ -85,6 +85,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -172,6 +173,10 @@
     <Compile Include="Migrations\201806250041047_asd.cs" />
     <Compile Include="Migrations\201806250041047_asd.Designer.cs">
       <DependentUpon>201806250041047_asd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806250432377_add tir.cs" />
+    <Compile Include="Migrations\201806250432377_add tir.Designer.cs">
+      <DependentUpon>201806250432377_add tir.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bono.cs" />
@@ -342,6 +347,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806250041047_asd.resx">
       <DependentUpon>201806250041047_asd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806250432377_add tir.resx">
+      <DependentUpon>201806250432377_add tir.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

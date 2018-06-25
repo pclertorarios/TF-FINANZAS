@@ -15,6 +15,7 @@ namespace Finanzas.Models
         public Estructuracion estructura { get; set; }
         public List<Periodo> periodos { get; set; }
         public Utilidad utilidad { get; set; }
-        public RatiosDesicion ratios { get; set;}
+        public RatiosDesicion ratios { get; set; }
+        public Rentabilidad rentabilidad { get; set; }
     }
 }

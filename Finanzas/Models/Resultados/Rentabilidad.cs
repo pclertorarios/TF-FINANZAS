@@ -10,7 +10,9 @@ namespace Finanzas.Models.Resultados
     {
         [Key]
         public int Id { get; set; }
+        [DisplayFormat(DataFormatString = @"{0:#\%}")]
         public double? TCEA { get; set; }
+        [DisplayFormat(DataFormatString = @"{0:#\%}")]
         public double? TREA { get; set; }
     }
 }
